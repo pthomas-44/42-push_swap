@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/10 14:12:49 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/16 14:01:27 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,54 @@
 void	init_stacks(t_structs *s, int size)
 {
 	s->size = size;
-	s->a = NULL;
-	s->b = NULL;
-}
-
-t_stack	*stk_get_last(t_stack *a)
-{
-	t_stack	*tmp;
-
-	tmp = a;
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-void	stk_add_new(t_structs *s, int nb)
-{
-	t_stack	*elem;
-	t_stack	*last;
-
-	elem = malloc(sizeof(t_stack));
-	if (!elem)
+	s->a.size = size;
+	s->b.size = 0;
+	s->a.stk = ft_calloc(size, sizeof(int));
+	s->b.stk = ft_calloc(size, sizeof(int));
+	if (!s->a.stk || !s->b.stk)
 		ft_exit(s, "error: malloc error\n", -1);
-	elem->nb = nb;
-	elem->next = NULL;
-	if (!s->a)
+}
+
+void	indexer(t_structs *s, t_stack *a)
+{
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	index;
+	int				*itab;
+
+	i = 0;
+	itab = ft_calloc(a->size, sizeof(int));
+	if (!itab)
+		ft_exit(s, "error: malloc error\n", -1);
+	while (i < a->size)
 	{
-		s->a = elem;
+		j = 0;
+		index = 0;
+		while (j < a->size)
+		{
+			if (a->stk[j] < a->stk[i])
+				index++;
+			j++;
+		}
+		itab[i] = index;
+		i++;
 	}
-	else
+	free(a->stk);
+	a->stk = itab;
+}
+
+int	is_sort(t_stack a)
+{
+	unsigned int	i;
+
+	i = 1;
+	while (i < a.size)
 	{
-		last = stk_get_last(s->a);
-		last->next = elem;
+		if (a.stk[i - 1] >= a.stk[i])
+			return (0);
+		i++;
 	}
+	return (1);
 }
 
 void	arg_checker(t_structs *s, int ac, char **av)
@@ -64,7 +79,7 @@ void	arg_checker(t_structs *s, int ac, char **av)
 		while (++j <= s->size)
 			if (ft_atoi(av[i]) == ft_atoi(av[j]))
 				ft_exit(s, "error: duplicate arguments\n", -1);
-		if (!ft_isdigit(av[i][0]) && av[i][0] != '-')
+		if (!ft_isdigit(av[i][0]) && (av[i][0] != '-' || av[i][1] == 0))
 			ft_exit(s, "error: argument is not an integer\n", -1);
 		j = 0;
 		while (av[i][++j])
@@ -72,8 +87,9 @@ void	arg_checker(t_structs *s, int ac, char **av)
 				ft_exit(s, "error: argument is not an integer\n", -1);
 		if (ft_atoi(av[i]) < INT_MIN || ft_atoi(av[i]) > INT_MAX)
 			ft_exit(s, "error: argument is not an integer\n", -1);
-		stk_add_new(s, ft_atoi(av[i]));
+		s->a.stk[i - 1] = ft_atoi(av[i]);
 	}
 	if (is_sort(s->a))
 		ft_exit(s, "", 0);
+	indexer(s, &s->a);
 }

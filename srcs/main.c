@@ -6,54 +6,44 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:29:29 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/10 14:13:22 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/16 17:44:42 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	print_stacks(t_structs *s)
+void	ft_exit(t_structs *s, char *errormsg, int status)
 {
-	t_stack	*tmpa;
-	t_stack	*tmpb;
-
-	tmpa = s->a;
-	tmpb = s->b;
-	printf("---|a|---\n");
-	if (tmpa)
-	{
-		while (tmpa)
-		{
-			printf("%d\n", tmpa->nb);
-			tmpa = tmpa->next;
-		}
-	}
-	printf("---|b|---\n");
-	if (tmpb)
-	{
-		while (tmpb)
-		{
-			printf("%d\n", tmpb->nb);
-			tmpb = tmpb->next;
-		}
-	}
+	free(s->a.stk);
+	free(s->b.stk);
+	write(1, errormsg, ft_strlen(errormsg));
+	exit(status);
 }
 
-int	is_sort(t_stack *stack)
+void	print_stacks(t_structs *s)
 {
-	t_stack	*tmpstack;
-	int		tmp;
+	unsigned int	i;
 
-	tmpstack = stack->next;
-	tmp = stack->nb;
-	while (tmpstack)
+	i = 0;
+	printf("---|a|---\n");
+	if (s->a.stk)
 	{
-		if (tmp > tmpstack->nb)
-			return (0);
-		tmp = tmpstack->nb;
-		tmpstack = tmpstack->next;
+		while (i < s->a.size)
+		{
+			printf("%d\n", s->a.stk[i]);
+			i++;
+		}
 	}
-	return (1);
+	i = 0;
+	printf("---|b|---\n");
+	if (s->b.stk)
+	{
+		while (i < s->b.size)
+		{
+			printf("%d\n", s->b.stk[i]);
+			i++;
+		}
+	}
 }
 
 int	main(int ac, char **av)
@@ -62,7 +52,7 @@ int	main(int ac, char **av)
 
 	init_stacks(&s, ac - 1);
 	arg_checker(&s, ac, av);
-	push_swap(&s);
+	sort(&s);
 	ft_exit(&s, "", 0);
 	return (0);
 }

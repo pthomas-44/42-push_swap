@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/09/09 13:48:13 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/09/16 19:13:54 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,10 @@ PATH_LIBFT	=	libft
 #~~~~ Sources ~~~~#
 
 SRCS		=	main.c \
-				ft_exit.c \
 				init.c \
 				operations.c \
-				
+				sort.c \
+				utils.c \
 
 #~~~~ Objects ~~~~#
 
