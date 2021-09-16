@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:30:45 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/16 19:27:09 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/16 19:41:50 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void				reverse_rotate(t_stack *a, t_stack *b, char *action);
 void				sort(t_structs *s);
 void				sort_three(t_stack *a);
 void				sort_five(t_structs *s);
-void				sort_hundred(t_structs *s);
-
+void				sort_hundreds(t_structs *s, int chunk_size);
 // ~~ utils.c
 void				get_to_top(t_stack *a, unsigned int index, char stack);
 int					get_highest(t_stack *a);

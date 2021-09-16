@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 10:26:35 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/16 19:24:50 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/16 19:40:12 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	sort_five(t_structs *s)
 	}
 }
 
-void	sort_hundred(t_structs *s)
+void	sort_hundred(t_structs *s, int chunk_size)
 {
 	unsigned int	maxchunk;
 
 	maxchunk = 0;
 	while (s->a.size)
 	{
-		maxchunk += 20;
+		maxchunk += chunk_size;
 		while (s->a.size && s->b.size < maxchunk)
 		{
 			get_to_top(&s->a, get_closest(&s->a, maxchunk), 'a');
@@ -79,5 +79,7 @@ void	sort(t_structs *s)
 	else if (s->size <= 5)
 		sort_five(s);
 	else if (s->size <= 100)
-		sort_hundred(s);
+		sort_hundred(s, 18);
+	else
+		sort_hundred(s, 36);
 }
