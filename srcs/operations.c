@@ -6,31 +6,41 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 13:22:14 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/16 13:42:03 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 16:47:48 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	ft_swap(int *a, int *b)
+void	do_op(t_stack *a, t_stack *b, char *action)
 {
-	int	tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	if (!action)
+		return ;
+	if (action[0] == 's')
+		swap(a, b, action);
+	else if (action[0] == 'p')
+	{
+		if (action[1] == 'a')
+			push(b, a);
+		else if (action[1] == 'b')
+			push(a, b);
+	}
+	else if (action[0] == 'r' && ft_strlen(action) == 3)
+		rotate(a, b, action);
+	else if (action[0] == 'r' && ft_strlen(action) == 4)
+		reverse_rotate(a, b, action);
+	write(1, action, ft_strlen(action));
 }
 
 void	swap(t_stack *a, t_stack *b, char *action)
 {
-	if (a)
+	if (!ft_strcmp(action, "sa\n") || !ft_strcmp(action, "ss\n"))
 		ft_swap(&a->stk[0], &a->stk[1]);
-	else if (b)
+	if (!ft_strcmp(action, "sb\n") || !ft_strcmp(action, "ss\n"))
 		ft_swap(&b->stk[0], &b->stk[1]);
-	write(1, action, ft_strlen(action));
 }
 
-void	push(t_stack *from, t_stack *to, char *action)
+void	push(t_stack *from, t_stack *to)
 {
 	unsigned int	i;
 
@@ -48,14 +58,13 @@ void	push(t_stack *from, t_stack *to, char *action)
 		i++;
 	}
 	from->size--;
-	write(1, action, ft_strlen(action));
 }
 
 void	rotate(t_stack *a, t_stack *b, char *action)
 {
 	unsigned int	i;
 
-	if (a)
+	if (a && (!ft_strcmp(action, "ra\n") || !ft_strcmp(action, "rr\n")))
 	{
 		i = 1;
 		while (i < a->size)
@@ -64,7 +73,7 @@ void	rotate(t_stack *a, t_stack *b, char *action)
 			i++;
 		}
 	}
-	if (b)
+	if (b && (!ft_strcmp(action, "rb\n") || !ft_strcmp(action, "rr\n")))
 	{
 		i = 1;
 		while (i < b->size)
@@ -73,14 +82,13 @@ void	rotate(t_stack *a, t_stack *b, char *action)
 			i++;
 		}
 	}
-	write(1, action, ft_strlen(action));
 }
 
 void	reverse_rotate(t_stack *a, t_stack *b, char *action)
 {
 	unsigned int	i;
 
-	if (a)
+	if (a && (!ft_strcmp(action, "rra\n") || !ft_strcmp(action, "rrr\n")))
 	{
 		i = a->size;
 		while (i)
@@ -90,7 +98,7 @@ void	reverse_rotate(t_stack *a, t_stack *b, char *action)
 		}
 		ft_swap(&a->stk[0], &a->stk[a->size]);
 	}
-	if (b)
+	if (b && (!ft_strcmp(action, "rrb\n") || !ft_strcmp(action, "rrr\n")))
 	{
 		i = b->size;
 		while (i)
@@ -100,5 +108,4 @@ void	reverse_rotate(t_stack *a, t_stack *b, char *action)
 		}
 		ft_swap(&b->stk[0], &b->stk[b->size]);
 	}
-	write(1, action, ft_strlen(action));
 }

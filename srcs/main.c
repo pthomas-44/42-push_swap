@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:29:29 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/16 17:44:42 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 16:48:29 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,16 @@ void	ft_exit(t_structs *s, char *errormsg, int status)
 	exit(status);
 }
 
-void	print_stacks(t_structs *s)
+void	sort(t_structs *s)
 {
-	unsigned int	i;
-
-	i = 0;
-	printf("---|a|---\n");
-	if (s->a.stk)
-	{
-		while (i < s->a.size)
-		{
-			printf("%d\n", s->a.stk[i]);
-			i++;
-		}
-	}
-	i = 0;
-	printf("---|b|---\n");
-	if (s->b.stk)
-	{
-		while (i < s->b.size)
-		{
-			printf("%d\n", s->b.stk[i]);
-			i++;
-		}
-	}
+	if (s->size <= 3)
+		sort_three(s);
+	else if (s->size <= 5)
+		sort_five(s);
+	else if (s->size <= 100)
+		sort_hundred(s, (float)s->size / 4.2);
+	else
+		sort_hundred(s, (float)s->size / 4.2);
 }
 
 int	main(int ac, char **av)

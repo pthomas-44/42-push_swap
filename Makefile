@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/09/16 19:13:54 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/09/28 16:15:33 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@
 #~~~~ Output ~~~~#
 
 NAME		= push_swap
+CHECKER		= checker
 
 #~~~~ Paths ~~~~#
 
@@ -33,9 +34,14 @@ SRCS		=	main.c \
 				sort.c \
 				utils.c \
 
+BSRCS		=	checker.c \
+				init.c \
+				operations.c \
+
 #~~~~ Objects ~~~~#
 
 OBJS		=	$(addprefix $(PATH_OBJS)/, $(SRCS:.c=.o))
+BOBJS		=	$(addprefix $(PATH_OBJS)/, $(BSRCS:.c=.o))
 
 #~~~~ Includes ~~~~#
 
@@ -60,6 +66,9 @@ all :		libs $(NAME)
 $(NAME) :	$(OBJS) $(LIBS)
 			$(CC) $(CFLAGS) -I $(INCS) $(OBJS) $(LIBS) -o $(NAME)
 
+bonus :		libs $(BOBJS) $(LIBS)
+			$(CC) $(CFLAGS) -I $(INCS) $(BOBJS) $(LIBS) -o $(CHECKER)
+
 libs :		
 			$(MAKE) -C $(PATH_LIBFT)
 			ln -sf $(addprefix $(PATH_LIBFT)/, libft.a) .
@@ -68,7 +77,7 @@ re :			fclean all
 
 #~~~~ Compilation Rules ~~~~#
 
-$(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c $(INCS) $(LIBS)
+$(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c $(INCS)
 					mkdir -p $(PATH_OBJS)
 					$(CC) $(CFLAGS) -O3 -I $(INCS) -c $< -o $@
 

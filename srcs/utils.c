@@ -6,36 +6,37 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:55:06 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/16 19:25:19 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 14:12:13 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	get_to_top(t_stack *a, unsigned int index, char stack)
+char	*get_action(t_stack *a, t_stack *b,
+	unsigned int a_index, unsigned int b_index)
 {
-	if (index < a->size / 2)
+	if (a && a_index && b && b_index)
 	{
-		while (index)
-		{
-			if (stack == 'a')
-				rotate(a, NULL, "ra\n");
-			else
-				rotate(a, NULL, "rb\n");
-			index--;
-		}
+		if (a_index <= a->size / 2 && b_index <= b->size / 2)
+			return ("rr\n");
+		else if (a_index > a->size / 2 && b_index > b->size / 2)
+			return ("rrr\n");
 	}
-	else
+	if (a && a_index)
 	{
-		while (index < a->size)
-		{
-			if (stack == 'a')
-				reverse_rotate(a, NULL, "rra\n");
-			else
-				reverse_rotate(a, NULL, "rrb\n");
-			index++;
-		}
+		if (a_index <= a->size / 2)
+			return ("ra\n");
+		else if (a_index > a->size / 2)
+			return ("rra\n");
 	}
+	if (b && b_index)
+	{
+		if (b_index <= b->size / 2)
+			return ("rb\n");
+		else if (b_index > b->size / 2)
+			return ("rrb\n");
+	}
+	return (NULL);
 }
 
 int	get_highest(t_stack *a)
@@ -123,7 +124,7 @@ int	get_closest(t_stack *a, int maxchunk)
 		i++;
 	}
 	i = a->size - 1;
-	while (i > -closest + a->size)
+	while (i > a->size - closest)
 	{
 		if (a->stk[i] < maxchunk)
 		{
