@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 13:22:14 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 16:47:48 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:26:46 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 void	do_op(t_stack *a, t_stack *b, char *action)
 {
-	if (!action)
-		return ;
-	if (action[0] == 's')
+	if (!ft_strcmp(action, "sa\n") || !ft_strcmp(action, "sb\n"))
 		swap(a, b, action);
-	else if (action[0] == 'p')
-	{
-		if (action[1] == 'a')
-			push(b, a);
-		else if (action[1] == 'b')
-			push(a, b);
-	}
-	else if (action[0] == 'r' && ft_strlen(action) == 3)
+	else if (!ft_strcmp(action, "pa\n"))
+		push(b, a);
+	else if (!ft_strcmp(action, "pb\n"))
+		push(a, b);
+	else if (!ft_strcmp(action, "ra\n") || !ft_strcmp(action, "rb\n")
+		|| !ft_strcmp(action, "rr\n"))
 		rotate(a, b, action);
-	else if (action[0] == 'r' && ft_strlen(action) == 4)
+	else if (!ft_strcmp(action, "rra\n") || !ft_strcmp(action, "rrb\n")
+		|| !ft_strcmp(action, "rrr\n"))
 		reverse_rotate(a, b, action);
 	write(1, action, ft_strlen(action));
 }
@@ -42,8 +39,12 @@ void	swap(t_stack *a, t_stack *b, char *action)
 
 void	push(t_stack *from, t_stack *to)
 {
+	t_structs		tmp;
 	unsigned int	i;
 
+	tmp.size = 8;
+	tmp.a = *from;
+	tmp.b = *to;
 	i = to->size;
 	to->size++;
 	while (i)
@@ -52,7 +53,7 @@ void	push(t_stack *from, t_stack *to)
 		i--;
 	}
 	ft_swap(&from->stk[0], &to->stk[0]);
-	while (i < from->size)
+	while (i < from->size - 1)
 	{
 		ft_swap(&from->stk[i], &from->stk[i + 1]);
 		i++;

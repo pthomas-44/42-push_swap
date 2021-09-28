@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:55:54 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 16:33:28 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:41:56 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,72 +20,55 @@ void	ft_exit(t_structs *s, char *errormsg, int status)
 	exit(status);
 }
 
-void	do_command(t_stack *a, t_stack *b, char *action)
+int	do_command(t_stack *a, t_stack *b, char *action)
 {
 	if (!action)
-		return ;
-	if (action[0] == 's')
+		return (0);
+	else if (!ft_strcmp(action, "sa\n") || !ft_strcmp(action, "sb\n"))
 		swap(a, b, action);
-	else if (action[0] == 'p')
-	{
-		if (action[1] == 'a')
-			push(b, a);
-		else if (action[1] == 'b')
-			push(a, b);
-	}
-	else if (action[0] == 'r' && ft_strlen(action) == 3)
+	else if (!ft_strcmp(action, "pa\n"))
+		push(b, a);
+	else if (!ft_strcmp(action, "pb\n"))
+		push(a, b);
+	else if (!ft_strcmp(action, "ra\n") || !ft_strcmp(action, "rb\n")
+		|| !ft_strcmp(action, "rr\n"))
 		rotate(a, b, action);
-	else if (action[0] == 'r' && ft_strlen(action) == 4)
+	else if (!ft_strcmp(action, "rra\n") || !ft_strcmp(action, "rrb\n")
+		|| !ft_strcmp(action, "rrr\n"))
 		reverse_rotate(a, b, action);
+	else
+		return (-1);
+	return (0);
 }
 
-void    print_stacks(t_structs *s)
+void	checker(t_structs *s)
 {
-	unsigned int	i;
+	char	*action;
+	int		ret;
 
-	i = 0;
-	printf("---|a|---\n");
-	if (s->a.stk)
+	action = NULL;
+	ret = 1;
+	while (ret)
 	{
-		while (i < s->a.size)
-		{
-			printf("%d\n", s->a.stk[i]);
-			i++;
-		}
-	}
-	i = 0;
-	printf("---|b|---\n");
-	if (s->b.stk)
-	{
-		while (i < s->b.size)
-		{
-			printf("%d\n", s->b.stk[i]);
-			i++;
-		}
+		ret = get_next_line(0, &action);
+		if (ret == -1)
+			ft_exit(s, "error: malloc error\n", 0);
+		if (!ret)
+			break ;
+		action = ft_strjoin_f1(action, "\n");
+		if (do_command(&s->a, &s->b, action) == -1)
+			ft_exit(s, "error: wrong instruction\n", 0);
+		free(action);
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_structs	s;
-	int			ret;
-	char		*action;
 
-	action = NULL;
-	ret = 1;
 	init_stacks(&s, ac - 1);
 	arg_checker(&s, ac, av);
-	print_stacks(&s);
-	while (ret)
-	{
-		ret = get_next_line(0, &action);
-		if (ret == -1)
-			ft_exit(&s, "error: malloc error\n", 0);
-		action = ft_strjoin_f1(action, "\n");
-		do_command(&s.a, &s.b, action);
-		free(action);
-	}
-	print_stacks(&s);
+	checker(&s);
 	if (is_sort(s.a) && !s.b.size)
 		write(1, "OK\n", 3);
 	else

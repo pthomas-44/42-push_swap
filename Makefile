@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/09/28 16:15:33 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/09/28 17:42:17 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ clean :
 
 fclean :		
 			$(MAKE) fclean -C $(PATH_LIBFT)
-			$(RM) -r $(PATH_OBJS) $(NAME) $(LIBS)
+			$(RM) -r $(PATH_OBJS) $(NAME) $(CHECKER) $(LIBS)
 
 #~~~~ Eugene ~~~~#
 

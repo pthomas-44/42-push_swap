@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 16:48:37 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:29:14 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	arg_checker(t_structs *s, int ac, char **av)
 	unsigned int	j;
 
 	if (ac < 2)
-		ft_exit(s, "error: missing arguments\n", -1);
+		ft_exit(s, "", -1);
 	i = 0;
 	while (av[++i])
 	{
@@ -89,7 +89,5 @@ void	arg_checker(t_structs *s, int ac, char **av)
 			ft_exit(s, "error: argument is not an integer\n", -1);
 		s->a.stk[i - 1] = ft_atoi(av[i]);
 	}
-	if (is_sort(s->a))
-		ft_exit(s, "", 0);
 	indexer(s, &s->a);
 }

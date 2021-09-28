@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:29:29 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 16:48:29 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:29:28 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int ac, char **av)
 
 	init_stacks(&s, ac - 1);
 	arg_checker(&s, ac, av);
+	if (is_sort(s.a))
+		ft_exit(&s, "", 0);
 	sort(&s);
 	ft_exit(&s, "", 0);
 	return (0);
