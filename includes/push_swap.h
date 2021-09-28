@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:30:45 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 16:51:28 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:52:46 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_structs
 // ~~ main.c
 void				ft_exit(t_structs *s, char *errormsg, int status);
 void				sort(t_structs *s);
-void				print_stacks(t_structs *s);
 // ~~ init.c
 void				init_stacks(t_structs *s, int size);
 void				arg_checker(t_structs *s, int ac, char **av);
@@ -54,12 +53,14 @@ void				push(t_stack *from, t_stack *to);
 void				rotate(t_stack *a, t_stack *b, char *action);
 void				reverse_rotate(t_stack *a, t_stack *b, char *action);
 // ~~ sort.c
-char				*get_action(t_stack *a, t_stack *b, unsigned int a_index, unsigned int b_index);
+char				*get_action(t_stack *a, t_stack *b,
+						unsigned int a_index, unsigned int b_index);
 void				sort_three(t_structs *a);
 void				sort_five(t_structs *s);
 void				sort_hundred(t_structs *s, int chunk_size);
 // ~~ utils.c
-void				get_to_top(t_structs *s, unsigned int index, unsigned int size, char stack);
+void				get_to_top(t_structs *s, unsigned int index,
+						unsigned int size, char stack);
 int					get_highest(t_stack *a);
 int					get_lowest(t_stack *a);
 int					get_previous(t_stack *b, int nb);

@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 13:22:14 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 17:26:46 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/28 17:51:38 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ void	swap(t_stack *a, t_stack *b, char *action)
 
 void	push(t_stack *from, t_stack *to)
 {
-	t_structs		tmp;
 	unsigned int	i;
 
-	tmp.size = 8;
-	tmp.a = *from;
-	tmp.b = *to;
+	if (!from->size)
+		return ;
 	i = to->size;
 	to->size++;
 	while (i)
