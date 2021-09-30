@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/09/28 17:42:17 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/09/30 10:21:36 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRCS		=	main.c \
 				operations.c \
 				sort.c \
 				utils.c \
+				hundred.c \
+				thousand.c \
 
 BSRCS		=	checker.c \
 				init.c \

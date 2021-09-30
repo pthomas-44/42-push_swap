@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:29:29 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 17:29:28 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/30 13:09:43 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sort(t_structs *s)
 	else if (s->size <= 100)
 		sort_hundred(s, (float)s->size / 4.2);
 	else
-		sort_hundred(s, (float)s->size / 4.2);
+		sort_thousands(s);
 }
 
 int	main(int ac, char **av)

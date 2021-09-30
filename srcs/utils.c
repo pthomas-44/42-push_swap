@@ -6,38 +6,11 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:55:06 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 14:12:13 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/09/30 14:11:30 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-char	*get_action(t_stack *a, t_stack *b,
-	unsigned int a_index, unsigned int b_index)
-{
-	if (a && a_index && b && b_index)
-	{
-		if (a_index <= a->size / 2 && b_index <= b->size / 2)
-			return ("rr\n");
-		else if (a_index > a->size / 2 && b_index > b->size / 2)
-			return ("rrr\n");
-	}
-	if (a && a_index)
-	{
-		if (a_index <= a->size / 2)
-			return ("ra\n");
-		else if (a_index > a->size / 2)
-			return ("rra\n");
-	}
-	if (b && b_index)
-	{
-		if (b_index <= b->size / 2)
-			return ("rb\n");
-		else if (b_index > b->size / 2)
-			return ("rrb\n");
-	}
-	return (NULL);
-}
 
 int	get_highest(t_stack *a)
 {
@@ -45,6 +18,8 @@ int	get_highest(t_stack *a)
 	int				high_value;
 	int				high_index;
 
+	if (!a->size)
+		return (0);
 	i = 1;
 	high_value = a->stk[0];
 	high_index = 0;
@@ -81,33 +56,26 @@ int	get_lowest(t_stack *a)
 	return (low_index);
 }
 
-int	get_previous(t_stack *b, int nb)
+void	get_to_top(t_structs *s,
+	unsigned int index, unsigned int size, char stack)
 {
-	unsigned int	i;
-	int				prev_value;
-	int				prev_index;
-	int				is_prev;
+	int	gap;
 
-	i = 0;
-	prev_value = -1;
-	prev_index = 0;
-	is_prev = 0;
-	while (b && i < b->size)
+	if (index <= size / 2)
+		gap = index;
+	else
+		gap = size - index;
+	while (gap > 0)
 	{
-		if (prev_value < b->stk[i] && b->stk[i] < nb)
-		{
-			prev_value = b->stk[i];
-			prev_index = i;
-			is_prev = 1;
-		}
-		i++;
+		if (stack == 'a')
+			do_op(&s->a, &s->b, get_action(&s->a, NULL, index, 0));
+		else if (stack == 'b')
+			do_op(&s->a, &s->b, get_action(NULL, &s->b, 0, index));
+		gap--;
 	}
-	if (!is_prev)
-		return (get_highest(b));
-	return (prev_index);
 }
 
-int	get_closest(t_stack *a, int maxchunk)
+int	get_closest(t_stack *a, int maxchunk, int minchunk)
 {
 	unsigned int	i;
 	unsigned int	closest;
@@ -116,7 +84,7 @@ int	get_closest(t_stack *a, int maxchunk)
 	closest = 0;
 	while (i < a->size)
 	{
-		if (a->stk[i] < maxchunk)
+		if (minchunk <= a->stk[i] && a->stk[i] < maxchunk)
 		{
 			closest = i;
 			break ;
@@ -126,7 +94,7 @@ int	get_closest(t_stack *a, int maxchunk)
 	i = a->size - 1;
 	while (i > a->size - closest)
 	{
-		if (a->stk[i] < maxchunk)
+		if (minchunk <= a->stk[i] && a->stk[i] < maxchunk)
 		{
 			closest = i;
 			break ;
@@ -134,4 +102,31 @@ int	get_closest(t_stack *a, int maxchunk)
 		i--;
 	}
 	return (closest);
+}
+
+char	*get_action(t_stack *a, t_stack *b,
+	unsigned int a_index, unsigned int b_index)
+{
+	if (a && a_index && b && b_index)
+	{
+		if (a_index <= a->size / 2 && b_index <= b->size / 2)
+			return ("rr\n");
+		else if (a_index > a->size / 2 && b_index > b->size / 2)
+			return ("rrr\n");
+	}
+	if (a && a_index)
+	{
+		if (a_index <= a->size / 2)
+			return ("ra\n");
+		else if (a_index > a->size / 2)
+			return ("rra\n");
+	}
+	if (b && b_index)
+	{
+		if (b_index <= b->size / 2)
+			return ("rb\n");
+		else if (b_index > b->size / 2)
+			return ("rrb\n");
+	}
+	return (NULL);
 }
