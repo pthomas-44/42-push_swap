@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:55:06 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/30 14:11:30 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 12:46:55 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	get_closest(t_stack *a, int maxchunk, int minchunk)
 		i++;
 	}
 	i = a->size - 1;
-	while (i > a->size - closest)
+	while (i < a->size && i > a->size - closest)
 	{
 		if (minchunk <= a->stk[i] && a->stk[i] < maxchunk)
 		{

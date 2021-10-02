@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 10:14:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/30 14:12:18 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 13:59:00 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,28 @@ t_chunk	init_chunk_three(t_structs *s, t_chunk chunk)
 
 void	push_chunk(t_structs *s, t_chunk chunk, char stack)
 {
-	if (stack == 'b')
+	unsigned int	tmp;
+
+	while (stack == 'b' && s->a.size && s->b.size < chunk.max)
 	{
-		while (s->a.size && s->b.size < chunk.max)
-		{
-			get_to_top(s, get_closest(&s->a, chunk.max, chunk.min),
-				s->a.size, 'a');
-			do_op(&s->a, &s->b, "pb\n");
-			// if (s->b.stk[0] < chunk.mid && get_closest(&s->a, chunk.max, chunk.min) <= (int)s->a.size / 2)
-				// do_op(&s->a, &s->b, "rr\n");
-			if (s->b.stk[0] < chunk.mid)
-				do_op(&s->a, &s->b, "rb\n");
-		}
+		get_to_top(s, get_closest(&s->a, chunk.max, chunk.min),
+			s->a.size, 'a');
+		do_op(&s->a, &s->b, "pb\n");
+		tmp = get_closest(&s->a, chunk.max, chunk.min);
+		if (s->b.stk[0] > chunk.mid && tmp < s->a.size / 2 && tmp)
+			do_op(&s->a, &s->b, "rr\n");
+		else if (s->b.stk[0] > chunk.mid)
+			do_op(&s->a, &s->b, "rb\n");
 	}
-	if (stack == 'a')
+	while (stack == 'a' && s->b.size && s->a.size < s->size - chunk.min)
 	{
-		while (s->b.size && s->a.size < s->size - chunk.min)
-		{
-			get_to_top(s, get_closest(&s->b, chunk.max, chunk.min),
-				s->b.size, 'b');
-			do_op(&s->a, &s->b, "pa\n");
-			// if (s->a.stk[0] < chunk.mid && get_closest(&s->b, chunk.max, chunk.min) <= (int)s->a.size / 2)
-				// do_op(&s->a, &s->b, "rr\n");
-			if (s->a.stk[0] > chunk.mid)
-				do_op(&s->a, &s->b, "ra\n");
-		}
+		get_to_top(s, get_closest(&s->b, chunk.max, chunk.min),
+			s->b.size, 'b');
+		do_op(&s->a, &s->b, "pa\n");
+		tmp = get_closest(&s->b, chunk.max, chunk.min);
+		if (s->a.stk[0] > chunk.mid && tmp < s->b.size / 2 && tmp)
+			do_op(&s->a, &s->b, "rr\n");
+		else if (s->a.stk[0] > chunk.mid)
+			do_op(&s->a, &s->b, "ra\n");
 	}
 }

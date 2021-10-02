@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:55:54 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 17:46:23 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 14:16:29 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ void	checker(t_structs *s)
 	{
 		ret = get_next_line(0, &action);
 		if (ret == -1)
+		{
+			free(action);
 			ft_exit(s, "error: malloc error\n", 0);
+		}
 		if (!ret)
+		{
+			free(action);
 			break ;
+		}
 		action = ft_strjoin_f1(action, "\n");
 		if (do_command(&s->a, &s->b, action) == -1)
 			ft_exit(s, "error: wrong instruction\n", 0);
