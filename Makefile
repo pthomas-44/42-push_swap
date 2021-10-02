@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/09/30 10:21:36 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/10/02 15:53:34 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ INCS		=	$(addprefix $(PATH_INCS)/, push_swap.h)
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
-LIBS		=	libft.a
+LIBS		=	$(PATH_LIBFT)/libft.a
 RM			=	rm -f
 
 #========================================#
@@ -73,14 +73,13 @@ bonus :		libs $(BOBJS) $(LIBS)
 
 libs :		
 			$(MAKE) -C $(PATH_LIBFT)
-			ln -sf $(addprefix $(PATH_LIBFT)/, libft.a) .
 
-re :			fclean all
+re :		fclean all
 
 #~~~~ Compilation Rules ~~~~#
 
 $(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c $(INCS)
-					mkdir -p $(PATH_OBJS)
+					@ mkdir -p $(PATH_OBJS)
 					$(CC) $(CFLAGS) -O3 -I $(INCS) -c $< -o $@
 
 #~~~~ Norminette ~~~~#

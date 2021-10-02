@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/09/28 17:29:14 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 15:47:30 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,32 @@ int	is_sort(t_stack a)
 	return (1);
 }
 
+int	is_overflow(const char *str)
+{
+	int		i;
+	long	nb;
+	int		sign;
+
+	i = 0;
+	sign = 1;
+	nb = 0;
+	if (*str == '-')
+		sign = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		nb = nb * 10 + *str - 48;
+		str++;
+		if (nb < 0)
+			return (1);
+	}
+	nb *= sign;
+	if (nb < INT_MIN || nb > INT_MAX)
+		return (1);
+	return (0);
+}
+
 void	arg_checker(t_structs *s, int ac, char **av)
 {
 	unsigned int	i;
@@ -77,16 +103,15 @@ void	arg_checker(t_structs *s, int ac, char **av)
 	{
 		j = i;
 		while (++j <= s->size)
-			if (ft_atoi(av[i]) == ft_atoi(av[j]))
+			if (ft_atoi(av[i]) == ft_atoi(av[j]) && ft_isdigit(av[j][0]))
 				ft_exit(s, "error: duplicate arguments\n", -1);
-		if (!ft_isdigit(av[i][0]) && (av[i][0] != '-' || av[i][1] == 0))
+		if ((!ft_isdigit(av[i][0]) && (av[i][0] != '-' || av[i][1] == 0))
+			|| is_overflow(av[i]))
 			ft_exit(s, "error: argument is not an integer\n", -1);
 		j = 0;
 		while (av[i][++j])
 			if (!ft_isdigit(av[i][j]))
 				ft_exit(s, "error: argument is not an integer\n", -1);
-		if (ft_atoi(av[i]) < INT_MIN || ft_atoi(av[i]) > INT_MAX)
-			ft_exit(s, "error: argument is not an integer\n", -1);
 		s->a.stk[i - 1] = ft_atoi(av[i]);
 	}
 	indexer(s, &s->a);

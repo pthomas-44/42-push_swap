@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:55:54 by pthomas           #+#    #+#             */
-/*   Updated: 2021/10/02 14:16:29 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 15:38:48 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	do_command(t_stack *a, t_stack *b, char *action)
 {
 	if (!action)
 		return (0);
-	else if (!ft_strcmp(action, "sa\n") || !ft_strcmp(action, "sb\n"))
+	else if (!ft_strcmp(action, "sa\n") || !ft_strcmp(action, "sb\n")
+		|| !ft_strcmp(action, "ss\n"))
 		swap(a, b, action);
 	else if (!ft_strcmp(action, "pa\n"))
 		push(b, a);
