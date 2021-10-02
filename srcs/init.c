@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:47:30 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/02 18:11:04 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	is_sort(t_stack a)
 
 int	is_overflow(const char *str)
 {
-	int		i;
-	long	nb;
-	int		sign;
+	int	i;
+	int	nb;
+	int	sign;
 
 	i = 0;
 	sign = 1;
@@ -80,14 +80,11 @@ int	is_overflow(const char *str)
 		str++;
 	while (ft_isdigit(*str))
 	{
-		nb = nb * 10 + *str - 48;
+		nb = nb * 10 + (*str - 48) * sign;
 		str++;
-		if (nb < 0)
+		if ((nb >= 0 && sign == -1) || (nb < 0 && sign == 1))
 			return (1);
 	}
-	nb *= sign;
-	if (nb < INT_MIN || nb > INT_MAX)
-		return (1);
 	return (0);
 }
 
