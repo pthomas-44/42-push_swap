@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/10/02 18:11:04 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/04 11:45:54 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ void	arg_checker(t_structs *s, int ac, char **av)
 	{
 		j = i;
 		while (++j <= s->size)
-			if (ft_atoi(av[i]) == ft_atoi(av[j]) && ft_isdigit(av[j][0]))
+			if (ft_atoi(av[i]) == ft_atoi(av[j])
+				&& ft_isdigit(av[j][0]) && av[j][0] != '-'
+					&& ft_isdigit(av[i][0]) && av[i][0] != '-')
 				ft_exit(s, "error: duplicate arguments\n", -1);
 		if ((!ft_isdigit(av[i][0]) && (av[i][0] != '-' || av[i][1] == 0))
 			|| is_overflow(av[i]))

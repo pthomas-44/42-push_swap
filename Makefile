@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/10/02 15:53:34 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/10/04 11:32:59 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 
 #~~~~ Output ~~~~#
 
-NAME		= push_swap
+PUSH_SWAP		= push_swap
 CHECKER		= checker
 
 #~~~~ Paths ~~~~#
@@ -63,18 +63,18 @@ RM			=	rm -f
 
 #~~~~ Main Rules ~~~~#
 
-all :		libs $(NAME)
+all :			libs $(PUSH_SWAP)
 
-$(NAME) :	$(OBJS) $(LIBS)
-			$(CC) $(CFLAGS) -I $(INCS) $(OBJS) $(LIBS) -o $(NAME)
+$(PUSH_SWAP) :	$(OBJS) $(LIBS)
+				$(CC) $(CFLAGS) -I $(INCS) $(OBJS) $(LIBS) -o $(PUSH_SWAP)
 
-bonus :		libs $(BOBJS) $(LIBS)
-			$(CC) $(CFLAGS) -I $(INCS) $(BOBJS) $(LIBS) -o $(CHECKER)
+bonus :			libs $(BOBJS) $(LIBS)
+				$(CC) $(CFLAGS) -I $(INCS) $(BOBJS) $(LIBS) -o $(CHECKER)
 
 libs :		
-			$(MAKE) -C $(PATH_LIBFT)
+				$(MAKE) -C $(PATH_LIBFT)
 
-re :		fclean all
+re :			fclean all
 
 #~~~~ Compilation Rules ~~~~#
 
@@ -85,18 +85,18 @@ $(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c $(INCS)
 #~~~~ Norminette ~~~~#
 
 norminette :
-			$(MAKE) norminette -C $(PATH_LIBFT)
-			norminette $(PATH_SRCS) $(PATH_BSRCS) $(PATH_INCS)
+				$(MAKE) norminette -C $(PATH_LIBFT)
+				norminette $(PATH_SRCS) $(PATH_BSRCS) $(PATH_INCS)
 
 #~~~~ Cleaning Rules ~~~~#
 
 clean :
-			$(MAKE) clean -C $(PATH_LIBFT)
-			$(RM) -r $(PATH_OBJS)
+				$(MAKE) clean -C $(PATH_LIBFT)
+				$(RM) -r $(PATH_OBJS)
 
 fclean :		
-			$(MAKE) fclean -C $(PATH_LIBFT)
-			$(RM) -r $(PATH_OBJS) $(NAME) $(CHECKER) $(LIBS)
+				$(MAKE) fclean -C $(PATH_LIBFT)
+				$(RM) -r $(PATH_OBJS) $(PUSH_SWAP) $(CHECKER)
 
 #~~~~ Eugene ~~~~#
 
