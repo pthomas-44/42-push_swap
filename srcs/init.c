@@ -6,22 +6,11 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 11:43:16 by pthomas           #+#    #+#             */
-/*   Updated: 2021/10/04 11:45:54 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/10/04 11:50:44 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-void	init_stacks(t_structs *s, int size)
-{
-	s->size = size;
-	s->a.size = size;
-	s->b.size = 0;
-	s->a.stk = ft_calloc(size, sizeof(int));
-	s->b.stk = ft_calloc(size, sizeof(int));
-	if (!s->a.stk || !s->b.stk)
-		ft_exit(s, "error: malloc error\n", -1);
-}
 
 void	indexer(t_structs *s, t_stack *a)
 {
@@ -86,6 +75,17 @@ int	is_overflow(const char *str)
 			return (1);
 	}
 	return (0);
+}
+
+void	init_stacks(t_structs *s, int size)
+{
+	s->size = size;
+	s->a.size = size;
+	s->b.size = 0;
+	s->a.stk = ft_calloc(size, sizeof(int));
+	s->b.stk = ft_calloc(size, sizeof(int));
+	if (!s->a.stk || !s->b.stk)
+		ft_exit(s, "error: malloc error\n", -1);
 }
 
 void	arg_checker(t_structs *s, int ac, char **av)
