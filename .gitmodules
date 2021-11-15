@@ -1,3 +1,9 @@
 [submodule "libft"]
 	path = libft
 	url = https://github.com/pthomas-44/libft.git
+[submodule "push_swap_visualizer"]
+	path = push_swap_visualizer
+	url = https://github.com/o-reo/push_swap_visualizer.git
+[submodule "complexity"]
+	path = complexity
+	url = https://github.com/SimonCROS/complexity.git
