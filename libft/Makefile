@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/24 08:57:58 by pthomas           #+#    #+#              #
-#    Updated: 2021/06/07 19:25:01 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/13 22:49:00 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,48 +16,54 @@
 
 #~~~~ Output ~~~~#
 
-NAME		= libft.a
+NAME		=	libft.a
 
 #~~~~ Paths ~~~~#
 
-PATH_INCS	=	includes
-PATH_SRCS	=	srcs
-PATH_OBJS	=	objs
+VPATH		=	src/gnl/:src/mem/:src/num/:src/put/:src/str/
+PATH_OBJ	=	obj/
+PATH_INC	=	include/
 
-#~~~~ Sources ~~~~#
+#~~~~ Files ~~~~#
 
-SRCS		=	ft_mem1.c \
-				ft_mem2.c \
-				ft_strinfo1.c \
-				ft_strinfo2.c \
-				ft_chrtype.c \
-				ft_strtype.c \
-				ft_num.c \
-				ft_convertbase.c \
-				ft_misc.c \
-				ft_strmodif.c \
-				ft_stralloc.c \
-				ft_strjoin.c \
-				ft_split.c \
-				ft_put.c \
-				ft_lst1.c \
-				ft_lst2.c \
-				get_next_line.c \
-				get_next_line_utils.c \
+SRCS		=	get_next_line.c			\
+				get_next_line_utils.c	\
+				ft_bzero.c				\
+				ft_calloc.c				\
+				ft_free.c				\
+				ft_memchr.c				\
+				ft_memcmp.c				\
+				ft_memcpy.c				\
+				ft_memmove.c			\
+				ft_memset.c				\
+				ft_atonb.c				\
+				ft_convertbase.c		\
+				ft_framing.c			\
+				ft_swap.c				\
+				ft_put.c				\
+				ft_chrtype.c			\
+				ft_split.c				\
+				ft_strchr.c				\
+				ft_strcmp.c				\
+				ft_strcpy.c				\
+				ft_strdup.c				\
+				ft_strjoin.c			\
+				ft_strlcat.c			\
+				ft_strlen.c				\
+				ft_strrev.c				\
+				ft_strtrim.c			\
+				ft_strtype.c			\
+				ft_substr.c
 
-#~~~~ Objects ~~~~#
+OBJ			=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
 
-OBJS		=	$(addprefix $(PATH_OBJS)/, $(SRCS:.c=.o))
-
-#~~~~ HEADERS ~~~~#
-
-INCS		= $(addprefix $(PATH_INCS)/, libft.h)
+INC			=	$(addprefix $(PATH_INC), libft.h)
 
 #~~~~ Macros ~~~~#
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
-RM			= rm -f
+CC			=	gcc
+CFLAGS		=	-Wall -Wextra -Werror
+RM			=	rm -f
 
 #========================================#
 #=============== TARGETS ================#
@@ -65,34 +71,28 @@ RM			= rm -f
 
 #~~~~ Main Rules ~~~~#
 
-all:		init $(NAME)
+all:				$(NAME)
 
-init:		$(shell mkdir -p $(PATH_OBJS))
-
-$(NAME):	$(OBJS)
-			ar rcs $(NAME) $?
+$(NAME):			$(OBJ)
+					ar rcs $(NAME) $?
 
 #~~~~ Compilation Rule ~~~~#
 
-$(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c  $(INCS)
-					${CC} ${CFLAGS} -O3 -I $(INCS) -c $< -o $@
-
-#~~~~ Norminette ~~~~#
-
-norminette :
-			norminette $(PATH_SRCS) $(PATH_INCS)
+$(PATH_OBJ)%.o :	%.c $(INC)
+					@mkdir -p $(dir $@);
+					${CC} ${CFLAGS} -c $< -o $@ -I $(PATH_INC)
 
 #~~~~ Cleaning Rules ~~~~#
 		
 clean:
-			$(RM) -r $(PATH_OBJS)
+					$(RM) -r $(PATH_OBJ)
 
-fclean:		clean
-			$(RM) $(NAME)
+fclean:				clean
+					$(RM) $(NAME)
 
 #~~~~ Other Rules ~~~~#
 
-re:			fclean all
+re:					fclean all
 
 #~~~~ Eugene ~~~~#
 
@@ -131,5 +131,4 @@ eugene :
 			@ echo "                7____,,..--'      /          |"
 			@ echo "                                  \`---.__,--.'"
 								  
-
 .PHONY:		all clean fclean re

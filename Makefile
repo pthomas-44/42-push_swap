@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/10/04 11:32:59 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/16 00:13:21 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,15 @@
 
 #~~~~ Output ~~~~#
 
-PUSH_SWAP		= push_swap
+PUSH_SWAP	= push_swap
 CHECKER		= checker
 
 #~~~~ Paths ~~~~#
 
-PATH_INCS	=	includes
-PATH_SRCS	=	srcs
-PATH_OBJS	=	objs
-PATH_LIBFT	=	libft
+VPATH		=	src/
+PATH_INCS	=	include/
+PATH_OBJS	=	obj/
+PATH_LIBFT	=	libft/
 
 #~~~~ Sources ~~~~#
 
@@ -34,27 +34,26 @@ SRCS		=	main.c \
 				sort.c \
 				utils.c \
 				hundred.c \
-				thousand.c \
+				thousand.c
 
 BSRCS		=	checker.c \
 				init.c \
-				operations.c \
+				operations.c
 
 #~~~~ Objects ~~~~#
 
-OBJS		=	$(addprefix $(PATH_OBJS)/, $(SRCS:.c=.o))
-BOBJS		=	$(addprefix $(PATH_OBJS)/, $(BSRCS:.c=.o))
+OBJS		=	$(addprefix $(PATH_OBJS), $(SRCS:.c=.o))
+BOBJS		=	$(addprefix $(PATH_OBJS), $(BSRCS:.c=.o))
 
 #~~~~ Includes ~~~~#
 
-INCS		=	$(addprefix $(PATH_INCS)/, push_swap.h)
-
+INCS		=	$(addprefix $(PATH_INCS), push_swap.h)
 
 #~~~~ Macros ~~~~#
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
-LIBS		=	$(PATH_LIBFT)/libft.a
+LIBS		=	$(PATH_LIBFT)libft.a
 RM			=	rm -f
 
 #========================================#
@@ -66,10 +65,10 @@ RM			=	rm -f
 all :			libs $(PUSH_SWAP)
 
 $(PUSH_SWAP) :	$(OBJS) $(LIBS)
-				$(CC) $(CFLAGS) -I $(INCS) $(OBJS) $(LIBS) -o $(PUSH_SWAP)
+				$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@ -I $(PATH_INCS)
 
 bonus :			libs $(BOBJS) $(LIBS)
-				$(CC) $(CFLAGS) -I $(INCS) $(BOBJS) $(LIBS) -o $(CHECKER)
+				$(CC) $(CFLAGS) $(BOBJS) $(LIBS) -o $(CHECKER) -I $(PATH_INCS)
 
 libs :		
 				$(MAKE) -C $(PATH_LIBFT)
@@ -78,15 +77,9 @@ re :			fclean all
 
 #~~~~ Compilation Rules ~~~~#
 
-$(PATH_OBJS)/%.o :	$(PATH_SRCS)/%.c $(INCS)
+$(PATH_OBJS)%.o :	%.c $(INCS)
 					@ mkdir -p $(PATH_OBJS)
-					$(CC) $(CFLAGS) -O3 -I $(INCS) -c $< -o $@
-
-#~~~~ Norminette ~~~~#
-
-norminette :
-				$(MAKE) norminette -C $(PATH_LIBFT)
-				norminette $(PATH_SRCS) $(PATH_BSRCS) $(PATH_INCS)
+					$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INCS)
 
 #~~~~ Cleaning Rules ~~~~#
 
@@ -135,4 +128,4 @@ eugene :
 			@ echo "                7____,,..--'      /          |"
 			@ echo "                                  \`---.__,--.'"
 								  
-.PHONY:		all libs norminette clean fclean re eugene
+.PHONY:		all libs clean fclean re eugene
