@@ -6,7 +6,7 @@
 #    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/11/16 14:00:06 by dev              ###   ########lyon.fr    #
+#    Updated: 2021/11/16 14:09:25 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ LIB			=	$(PATH_LIBFT)libft.a
 
 CC			=	gcc
 CFLAG		=	-Wall -Wextra -Werror
+INCLUDES	=	-I $(PATH_INC) -I $(PATH_LIBFT)$(PATH_INC)
 RM			=	rm -rf
 
 #========================================#
@@ -62,10 +63,10 @@ RM			=	rm -rf
 all :			lib $(PUSH_SWAP)
 
 $(PUSH_SWAP) :	$(OBJ) $(LIB)
-				$(CC) $(CFLAG) $(OBJ) $(LIB) -o $@ -I $(PATH_INC)
+				$(CC) $(CFLAG) $(OBJ) $(LIB) -o $@ $(INCLUDES)
 
 bonus :			lib $(BOBJ) $(LIB)
-				$(CC) $(CFLAG) $(BOBJ) $(LIB) -o $(CHECKER) -I $(PATH_INC)
+				$(CC) $(CFLAG) $(BOBJ) $(LIB) -o $(CHECKER) $(INCLUDES)
 
 lib :		
 				$(MAKE) -C $(PATH_LIBFT)
@@ -76,7 +77,7 @@ re :			fclean all
 
 $(PATH_OBJ)%.o :	%.c $(INC)
 					@ mkdir -p $(PATH_OBJ)
-					$(CC) $(CFLAG) -c $< -o $@ -I $(PATH_INC)
+					$(CC) $(CFLAG) -c $< -o $@ $(INCLUDES)
 
 #~~~~ Cleaning Rules ~~~~#
 

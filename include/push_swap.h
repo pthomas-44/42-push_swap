@@ -6,7 +6,7 @@
 /*   By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 13:30:45 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/16 00:13:17 by dev              ###   ########lyon.fr   */
+/*   Updated: 2021/11/16 14:08:12 by dev              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 /*** ~~ LIBS ~~ ***/
 
 # include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
-# include "../libft/include/libft.h"
-# include <stdio.h>
+# include "libft.h"
 
 /*** ~~ STRUCTURES ~~ ***/
 
