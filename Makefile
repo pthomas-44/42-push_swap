@@ -6,7 +6,7 @@
 #    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/11/16 13:50:42 by dev              ###   ########lyon.fr    #
+#    Updated: 2021/11/16 13:58:05 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ PATH_OBJ	=	obj/
 
 #~~~~ Files ~~~~#
 
-SRCS		=	main.c \
+SRC			=	main.c \
 				init.c \
 				operations.c \
 				sort.c \
@@ -36,21 +36,22 @@ SRCS		=	main.c \
 				hundred.c \
 				thousand.c
 
-BSRCS		=	checker.c \
+BSRC		=	checker.c \
 				init.c \
 				operations.c
 
-OBJ			=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
-BOBJ		=	$(addprefix $(PATH_OBJ), $(BSRCS:.c=.o))
+OBJ			=	$(addprefix $(PATH_OBJ), $(SRC:.c=.o))
+BOBJ		=	$(addprefix $(PATH_OBJ), $(BSRC:.c=.o))
 
 INC			=	$(addprefix $(PATH_INC), push_swap.h)
+
+LIB			=	$(PATH_LIBFT)libft.a
 
 #~~~~ Macros ~~~~#
 
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAG		=	-Wall -Wextra -Werror
 RM			=	rm -rf
-LIB			=	$(PATH_LIBFT)libft.a
 
 #========================================#
 #=============== TARGETS ================#
@@ -61,10 +62,10 @@ LIB			=	$(PATH_LIBFT)libft.a
 all :			lib $(PUSH_SWAP)
 
 $(PUSH_SWAP) :	$(OBJ) $(LIB)
-				$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $@ -I $(PATH_INC)
+				$(CC) $(CFLAG) $(OBJ) $(LIB) -o $@ -I $(PATH_INC)
 
 bonus :			libs $(BOBJ) $(LIB)
-				$(CC) $(CFLAGS) $(BOBJ) $(LIB) -o $(CHECKER) -I $(PATH_INC)
+				$(CC) $(CFLAG) $(BOBJ) $(LIB) -o $(CHECKER) -I $(PATH_INC)
 
 lib :		
 				$(MAKE) -C $(PATH_LIBFT)
@@ -75,7 +76,7 @@ re :			fclean all
 
 $(PATH_OBJ)%.o :	%.c $(INC)
 					@ mkdir -p $(PATH_OBJ)
-					$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INC)
+					$(CC) $(CFLAG) -c $< -o $@ -I $(PATH_INC)
 
 #~~~~ Cleaning Rules ~~~~#
 
