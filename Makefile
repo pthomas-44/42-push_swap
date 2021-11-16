@@ -6,7 +6,7 @@
 #    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/11/16 00:13:21 by dev              ###   ########lyon.fr    #
+#    Updated: 2021/11/16 13:42:21 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ CHECKER		= checker
 #~~~~ Paths ~~~~#
 
 VPATH		=	src/
-PATH_INCS	=	include/
-PATH_OBJS	=	obj/
+PATH_INC	=	include/
+PATH_OBJ	=	obj/
 PATH_LIBFT	=	libft/
 
-#~~~~ Sources ~~~~#
+#~~~~ Files ~~~~#
 
 SRCS		=	main.c \
 				init.c \
@@ -40,21 +40,17 @@ BSRCS		=	checker.c \
 				init.c \
 				operations.c
 
-#~~~~ Objects ~~~~#
+OBJ			=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
+BOBJ		=	$(addprefix $(PATH_OBJ), $(BSRCS:.c=.o))
 
-OBJS		=	$(addprefix $(PATH_OBJS), $(SRCS:.c=.o))
-BOBJS		=	$(addprefix $(PATH_OBJS), $(BSRCS:.c=.o))
-
-#~~~~ Includes ~~~~#
-
-INCS		=	$(addprefix $(PATH_INCS), push_swap.h)
+INC			=	$(addprefix $(PATH_INC), push_swap.h)
 
 #~~~~ Macros ~~~~#
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
-LIBS		=	$(PATH_LIBFT)libft.a
-RM			=	rm -f
+RM			=	rm -rf
+LIB			=	$(PATH_LIBFT)libft.a
 
 #========================================#
 #=============== TARGETS ================#
@@ -62,34 +58,34 @@ RM			=	rm -f
 
 #~~~~ Main Rules ~~~~#
 
-all :			libs $(PUSH_SWAP)
+all :			lib $(PUSH_SWAP)
 
-$(PUSH_SWAP) :	$(OBJS) $(LIBS)
-				$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@ -I $(PATH_INCS)
+$(PUSH_SWAP) :	$(OBJ) $(LIB)
+				$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $@ -I $(PATH_INC)
 
-bonus :			libs $(BOBJS) $(LIBS)
-				$(CC) $(CFLAGS) $(BOBJS) $(LIBS) -o $(CHECKER) -I $(PATH_INCS)
+bonus :			libs $(BOBJ) $(LIB)
+				$(CC) $(CFLAGS) $(BOBJ) $(LIB) -o $(CHECKER) -I $(PATH_INC)
 
-libs :		
+lib :		
 				$(MAKE) -C $(PATH_LIBFT)
 
 re :			fclean all
 
 #~~~~ Compilation Rules ~~~~#
 
-$(PATH_OBJS)%.o :	%.c $(INCS)
-					@ mkdir -p $(PATH_OBJS)
-					$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INCS)
+$(PATH_OBJ)%.o :	%.c $(INC)
+					@ mkdir -p $(PATH_OBJ)
+					$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INC)
 
 #~~~~ Cleaning Rules ~~~~#
 
 clean :
 				$(MAKE) clean -C $(PATH_LIBFT)
-				$(RM) -r $(PATH_OBJS)
+				$(RM) $(PATH_OBJ)
 
 fclean :		
 				$(MAKE) fclean -C $(PATH_LIBFT)
-				$(RM) -r $(PATH_OBJS) $(PUSH_SWAP) $(CHECKER)
+				$(RM) $(PATH_OBJ) $(PUSH_SWAP) $(CHECKER)
 
 #~~~~ Eugene ~~~~#
 
@@ -128,4 +124,4 @@ eugene :
 			@ echo "                7____,,..--'      /          |"
 			@ echo "                                  \`---.__,--.'"
 								  
-.PHONY:		all libs clean fclean re eugene
+.PHONY:		all lib clean fclean re eugene
