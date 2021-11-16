@@ -6,7 +6,7 @@
 #    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/11/16 13:42:21 by dev              ###   ########lyon.fr    #
+#    Updated: 2021/11/16 13:50:42 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ CHECKER		= checker
 
 VPATH		=	src/
 PATH_INC	=	include/
-PATH_OBJ	=	obj/
 PATH_LIBFT	=	libft/
+PATH_OBJ	=	obj/
 
 #~~~~ Files ~~~~#
 
