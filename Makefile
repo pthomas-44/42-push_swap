@@ -6,7 +6,7 @@
 #    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 15:10:53 by bmangin           #+#    #+#              #
-#    Updated: 2021/11/16 13:58:05 by dev              ###   ########lyon.fr    #
+#    Updated: 2021/11/16 14:00:06 by dev              ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ all :			lib $(PUSH_SWAP)
 $(PUSH_SWAP) :	$(OBJ) $(LIB)
 				$(CC) $(CFLAG) $(OBJ) $(LIB) -o $@ -I $(PATH_INC)
 
-bonus :			libs $(BOBJ) $(LIB)
+bonus :			lib $(BOBJ) $(LIB)
 				$(CC) $(CFLAG) $(BOBJ) $(LIB) -o $(CHECKER) -I $(PATH_INC)
 
 lib :		
